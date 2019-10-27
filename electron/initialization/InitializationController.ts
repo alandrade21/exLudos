@@ -32,7 +32,7 @@ export class InitializationController extends AppConfigurator<ConfigOptions> {
 
   // Override
   protected createConfigFile(): void {
-    this.appOptions = new ConfigOptions();
+    this._appOptions = new ConfigOptions();
     try {
       this.cfm.writeFile(this.appOptions);
     } catch (error) {
