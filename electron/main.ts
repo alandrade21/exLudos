@@ -25,7 +25,7 @@ import { DEV_CONFIG_FOLDER_PATH } from './constants';
 import { MenuBuilder } from './menu/MenuBuilder';
 
 /**
- * This code is responsible to initialize the electron app and open the main window if the 
+ * This code is responsible to initialize the electron app and open the main window if the
  * initialization process is successful.
  */
 app.on('ready', () => {
