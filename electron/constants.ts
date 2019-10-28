@@ -19,3 +19,5 @@
 
 export const DEV_CONFIG_FOLDER_PATH = '/home/andre/Desenv/projetos/devTestFolders/.config/exLudos';
 export const DEV_DATA_FOLDER_PATH = '/home/andre/Desenv/projetos/devTestFolders/.local/share/exLudos';
+export const DATABASE_FILE_NAME = 'userCollection.sqlite';
+export const SKEL_FILE_NAME = 'skel.sqlite';

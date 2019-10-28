@@ -17,17 +17,23 @@
  * along with "server-arch".  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { AppConfigurator } from '@alandrade21/electron-arch';
+import { app } from 'electron';
+import { AppConfigurator, DatabaseFileManager } from '@alandrade21/electron-arch';
+
 import { ConfigOptions } from './ConfigOptions';
+import { DATABASE_FILE_NAME, SKEL_FILE_NAME } from './../constants';
 
 /**
  * Class responsible to check and initialize all things that the app will need.
  */
 export class InitializationController extends AppConfigurator<ConfigOptions> {
 
+  private _dfm = new DatabaseFileManager(DATABASE_FILE_NAME, this._dataFolder);
+
   // Override
   public doConfig(): void {
     super.doConfig();
+    this.initializeDatabase();
   }
 
   // Override
@@ -38,6 +44,18 @@ export class InitializationController extends AppConfigurator<ConfigOptions> {
     } catch (error) {
       this.errorDialog(error);
       throw error;
+    }
+  }
+
+  private initializeDatabase(): void {
+    if (!this._dfm.fileExist()) {
+      const skelPath = `${app.getAppPath()}/database/`;
+      try {
+        this._dfm.copySkellDatabase(SKEL_FILE_NAME, skelPath);
+      } catch (error) {
+        this.errorDialog(error);
+        throw error;
+      }
     }
   }
 
