@@ -17,13 +17,7 @@
  * along with "server-arch".  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { ConfigData } from '@alandrade21/electron-arch';
-
-/**
- * Abstraction of the configuration file. This class contains all options that can be configured for
- * the app.
- */
-export class ConfigOptions implements ConfigData {
-  languages = ['en', 'pt-BR'];
-  fallbackLng = 'en';
+export class Language {
+  locale: string;
+  name: string;
 }
