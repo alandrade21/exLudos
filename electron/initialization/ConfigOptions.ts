@@ -18,12 +18,19 @@
  */
 
 import { ConfigData } from '@alandrade21/electron-arch';
+import { Language } from './Language';
 
 /**
  * Abstraction of the configuration file. This class contains all options that can be configured for
  * the app.
  */
 export class ConfigOptions implements ConfigData {
-  languages = ['en', 'pt-BR'];
+
+  selectedLng = 'en';
+
+  languages: Language[] = [
+    {'locale': 'en', 'name': 'English'},
+    {'locale': 'pt-BR', 'name': 'Português do Brasil'}
+  ];
   fallbackLng = 'en';
 }

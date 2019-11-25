@@ -18,21 +18,28 @@
  */
 
 import { app } from 'electron';
-import { AppConfigurator, DatabaseFileManager } from '@alandrade21/electron-arch';
+import i18n, { InitOptions } from 'i18next';
+import i18nextBackend from 'i18next-node-fs-backend';
 
+import { AppConfigurator, DatabaseFileManager, envDetector } from '@alandrade21/electron-arch';
 import { ConfigOptions } from './ConfigOptions';
 import { DATABASE_FILE_NAME, SKEL_FILE_NAME } from './../constants';
+import { Language } from './Language';
 
 /**
  * Class responsible to check and initialize all things that the app will need.
  */
 export class InitializationController extends AppConfigurator<ConfigOptions> {
 
+  private static _options: ConfigOptions;
+
   private _dfm = new DatabaseFileManager(DATABASE_FILE_NAME, this._dataFolder);
 
   // Override
   public doConfig(): void {
     super.doConfig();
+    InitializationController._options = this._appOptions;
+    this.initializeI18nSupport();
     this.initializeDatabase();
   }
 
@@ -40,10 +47,44 @@ export class InitializationController extends AppConfigurator<ConfigOptions> {
   protected createConfigFile(): void {
     this._appOptions = new ConfigOptions();
     try {
-      this.cfm.writeFile(this.appOptions);
+      this.cfm.writeFile(this._appOptions);
     } catch (error) {
       this.errorDialog(error);
       throw error;
+    }
+  }
+
+  private initializeI18nSupport() {
+    i18n.use(i18nextBackend);
+
+    const languages: string[] = [];
+
+    this.appOptions.languages.forEach((language: Language) => {
+      languages.push(language.locale);
+    });
+
+    const options: InitOptions = {
+      backend: {
+        // path where resources get loaded from
+        loadPath: './locales/{{lng}}/{{ns}}.json',
+
+        // path to post missing resources
+        addPath: './locales/{{lng}}/{{ns}}.missing.json',
+
+        // jsonIndent to use when storing json files
+        jsonIndent: 2,
+      },
+      saveMissing: true,
+      fallbackLng: this.appOptions.fallbackLng,
+      whitelist: languages
+    };
+
+    if (envDetector.isDev()) {
+      options.debug = true;
+    }
+
+    if (!i18n.isInitialized) {
+      i18n.init(options);
     }
   }
 
@@ -57,6 +98,10 @@ export class InitializationController extends AppConfigurator<ConfigOptions> {
         throw error;
       }
     }
+  }
+
+  static get options(): ConfigOptions {
+    return InitializationController._options;
   }
 
 }

@@ -18,8 +18,11 @@
  */
 
 import { MenuItemConstructorOptions, Menu } from 'electron';
+import i18n from 'i18next';
 
 import { MainWindowController, envDetector } from '@alandrade21/electron-arch';
+import { InitializationController } from 'initialization/InitializationController';
+import { Language } from 'initialization/Language';
 
 /**
  * Class responsible to create menus on app.
@@ -32,25 +35,50 @@ export class MenuBuilder {
    */
   public static createMainWindowMenu(): void {
     if (envDetector.isDev()) {
-      this.menuOptions.push(this.buildDevelopMenu());
+      MenuBuilder.menuOptions.push(MenuBuilder.buildDevelopMenu());
     }
-    Menu.setApplicationMenu(Menu.buildFromTemplate(this.menuOptions));
+
+    MenuBuilder.menuOptions.push(MenuBuilder.buildLanguageMenu());
+
+    Menu.setApplicationMenu(Menu.buildFromTemplate(MenuBuilder.menuOptions));
   }
 
   private static buildDevelopMenu(): MenuItemConstructorOptions {
     return {
       type: 'submenu',
-      label: 'Development',
+      label: i18n.t('Development'),
       submenu: [
         {
           type: 'normal',
-          label: 'Toggle DevTools',
+          label: i18n.t('Toggle DevTools'),
           accelerator: 'CommandOrControl+Shift+T',
           click: () => {
             MainWindowController.mainWindow.webContents.toggleDevTools();
           }
         }
       ]
+    };
+  }
+
+  private static buildLanguageMenu(): MenuItemConstructorOptions {
+
+    const submenu: MenuItemConstructorOptions[] =
+        InitializationController.options.languages.map((language: Language) => {
+      return {
+        label: language.name,
+        type: 'radio',
+        checked: language.locale === InitializationController.options.selectedLng,
+        click: () => {
+          i18n.changeLanguage(language.locale);
+          InitializationController.options.selectedLng = language.locale;
+        }
+      };
+    });
+
+    return {
+      type: 'submenu',
+      label: i18n.t('Language'),
+      submenu: submenu
     };
   }
 }

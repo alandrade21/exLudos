@@ -18,6 +18,7 @@
 */
 
 import { app } from 'electron';
+import i18n from 'i18next';
 
 import { MainWindowController, envDetector, ErrorWrapper } from '@alandrade21/electron-arch';
 import { InitializationController } from './initialization/InitializationController';
@@ -35,16 +36,26 @@ app.on('ready', () => {
 
     // It is necessary to create the window first in order to show the dialogs.
     MainWindowController.initialize();
-    MenuBuilder.createMainWindowMenu();
 
     // Do the app initialization.
     const initController = new InitializationController('exLudos', DEV_CONFIG_FOLDER_PATH,
         DEV_DATA_FOLDER_PATH);
     initController.doConfig();
 
+    i18n.on('loaded', (loaded: boolean) => {
+
+      i18n.changeLanguage('en');
+    });
+
+    i18n.on('languageChanged', (lng: string) => {
+
+      MenuBuilder.createMainWindowMenu();
+    });
+
     if (MainWindowController.mainWindow) {
       MainWindowController.mainWindow.show();
     }
+
   } catch (e) {
     if (e instanceof ErrorWrapper) {
       (<ErrorWrapper>e).consoleLog();

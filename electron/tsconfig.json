@@ -1,4 +1,4 @@
-// this file compiles the Angular part 
+// this file compiles the Angular part
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -10,6 +10,8 @@
     "declaration": false,
     "module": "commonjs",
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -27,4 +29,3 @@
     ]
   }
 }
-
