@@ -18,9 +18,9 @@
 */
 
 import { app } from 'electron';
-import i18n from 'i18next';
+// import i18n from 'i18next';
 
-import { MainWindowController, envDetector, ErrorWrapper } from '@alandrade21/electron-arch';
+import { MainWindowController, envDetector, ErrorWrapper, i18n, InitOptions } from '@alandrade21/electron-arch';
 import { InitializationController } from './initialization/InitializationController';
 import { DEV_CONFIG_FOLDER_PATH, DEV_DATA_FOLDER_PATH } from './constants';
 import { MenuBuilder } from './menu/MenuBuilder';
@@ -41,7 +41,7 @@ app.on('ready', () => {
     const initController = new InitializationController('exLudos', DEV_CONFIG_FOLDER_PATH,
         DEV_DATA_FOLDER_PATH);
     initController.doConfig();
-
+/*
     i18n.on('loaded', (loaded: boolean) => {
 
       i18n.changeLanguage('en');
@@ -51,6 +51,11 @@ app.on('ready', () => {
 
       MenuBuilder.createMainWindowMenu();
     });
+*/
+
+    const opt: InitOptions = {loadPath: '/home/andre/Desenv/projetos/devTestFolders/.lang'};
+
+    i18n.init(opt);
 
     if (MainWindowController.mainWindow) {
       MainWindowController.mainWindow.show();

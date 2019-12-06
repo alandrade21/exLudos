@@ -18,8 +18,10 @@
  */
 
 import { app } from 'electron';
-import i18n, { InitOptions } from 'i18next';
-import i18nextBackend from 'i18next-node-fs-backend';
+ import i18next, { InitOptions } from 'i18next';
+// import i18nextBackend from 'i18next-node-fs-backend';
+
+// const i18nextBackend = require('i18next-node-fs-backend');
 
 import { AppConfigurator, DatabaseFileManager, envDetector } from '@alandrade21/electron-arch';
 import { ConfigOptions } from './ConfigOptions';
@@ -39,7 +41,7 @@ export class InitializationController extends AppConfigurator<ConfigOptions> {
   public doConfig(): void {
     super.doConfig();
     InitializationController._options = this._appOptions;
-    this.initializeI18nSupport();
+    // this.initializeI18nSupport();
     this.initializeDatabase();
   }
 
@@ -54,8 +56,9 @@ export class InitializationController extends AppConfigurator<ConfigOptions> {
     }
   }
 
+  /*
   private initializeI18nSupport() {
-    i18n.use(i18nextBackend);
+    i18next.use(i18nextBackend);
 
     const languages: string[] = [];
 
@@ -83,11 +86,11 @@ export class InitializationController extends AppConfigurator<ConfigOptions> {
       options.debug = true;
     }
 
-    if (!i18n.isInitialized) {
-      i18n.init(options);
+    if (!i18next.isInitialized) {
+      i18next.init(options);
     }
   }
-
+*/
   private initializeDatabase(): void {
     if (!this._dfm.fileExist()) {
       const skelPath = `${app.getAppPath()}/database/`;

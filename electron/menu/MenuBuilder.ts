@@ -18,11 +18,11 @@
  */
 
 import { MenuItemConstructorOptions, Menu } from 'electron';
-import i18n from 'i18next';
+
 
 import { MainWindowController, envDetector } from '@alandrade21/electron-arch';
-import { InitializationController } from 'initialization/InitializationController';
-import { Language } from 'initialization/Language';
+import { InitializationController } from '../initialization/InitializationController';
+import { Language } from '../initialization/Language';
 
 /**
  * Class responsible to create menus on app.
@@ -38,7 +38,7 @@ export class MenuBuilder {
       MenuBuilder.menuOptions.push(MenuBuilder.buildDevelopMenu());
     }
 
-    MenuBuilder.menuOptions.push(MenuBuilder.buildLanguageMenu());
+    // MenuBuilder.menuOptions.push(MenuBuilder.buildLanguageMenu());
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(MenuBuilder.menuOptions));
   }
@@ -46,11 +46,11 @@ export class MenuBuilder {
   private static buildDevelopMenu(): MenuItemConstructorOptions {
     return {
       type: 'submenu',
-      label: i18n.t('Development'),
+      label: 'Development',
       submenu: [
         {
           type: 'normal',
-          label: i18n.t('Toggle DevTools'),
+          label: 'Toggle DevTools',
           accelerator: 'CommandOrControl+Shift+T',
           click: () => {
             MainWindowController.mainWindow.webContents.toggleDevTools();
@@ -59,7 +59,7 @@ export class MenuBuilder {
       ]
     };
   }
-
+/*
   private static buildLanguageMenu(): MenuItemConstructorOptions {
 
     const submenu: MenuItemConstructorOptions[] =
@@ -81,4 +81,5 @@ export class MenuBuilder {
       submenu: submenu
     };
   }
+  */
 }
