@@ -57,6 +57,12 @@ app.on('ready', () => {
 
     i18n.init(opt);
 
+    console.log(i18n.t('Toggle DevTools'));
+
+    i18n.changeLanguage('pt-BR');
+
+    console.log(i18n.t('Toggle DevTools'));
+
     if (MainWindowController.mainWindow) {
       MainWindowController.mainWindow.show();
     }
