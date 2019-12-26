@@ -17,24 +17,12 @@
  * along with "server-arch".  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { ConfigData } from '@alandrade21/electron-arch';
-import { Language } from './Language';
+import { ErrorWrapper } from '@alandrade21/electron-arch';
 
-/**
- * Abstraction of the configuration file. This class contains all options that can be configured for
- * the app.
- */
-export class ConfigOptions implements ConfigData {
+export class AppContextError extends ErrorWrapper {
+  // Override
+  protected _type = 'CONTEXT_ERROR';
 
-  // Last language selected.
-  selectedLng = 'en';
-
-  // Supported languages
-  languages: Language[] = [
-    {'locale': 'en', 'name': 'English'},
-    {'locale': 'pt-BR', 'name': 'Português do Brasil'}
-  ];
-
-  // Custom data directory.
-  dataDir?: string;
+  // Override
+  protected _className = 'AppContextError';
 }

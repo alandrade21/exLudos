@@ -1,0 +1,7 @@
+{
+  "menus": {
+	  "Development": "Development",
+  	"DevTools": "Toggle DevTools",
+  	"Language": "Language"
+  }
+}

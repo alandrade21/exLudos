@@ -17,24 +17,25 @@
  * along with "server-arch".  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { ConfigData } from '@alandrade21/electron-arch';
-import { Language } from './Language';
+import { ConfigOptions } from '../initialization/ConfigOptions';
+import { AppContextError } from './AppContextError';
 
-/**
- * Abstraction of the configuration file. This class contains all options that can be configured for
- * the app.
- */
-export class ConfigOptions implements ConfigData {
+class AppContext {
+  private _options: ConfigOptions | null;
 
-  // Last language selected.
-  selectedLng = 'en';
+  set options(options: ConfigOptions) {
+    if (this._options) {
+      throw new AppContextError('The app options were already initialized in context.');
+    }
+    this._options = options;
+  }
 
-  // Supported languages
-  languages: Language[] = [
-    {'locale': 'en', 'name': 'English'},
-    {'locale': 'pt-BR', 'name': 'Português do Brasil'}
-  ];
-
-  // Custom data directory.
-  dataDir?: string;
+  get options(): ConfigOptions {
+    if (!this._options) {
+      throw new AppContextError('The app options were not initialized in context yet.');
+    }
+    return this._options;
+  }
 }
+
+export const appContext = new AppContext();

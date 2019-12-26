@@ -20,9 +20,9 @@
 import { MenuItemConstructorOptions, Menu } from 'electron';
 
 
-import { MainWindowController, envDetector } from '@alandrade21/electron-arch';
-import { InitializationController } from '../initialization/InitializationController';
+import { MainWindowController, envDetector, i18n } from '@alandrade21/electron-arch';
 import { Language } from '../initialization/Language';
+import { appContext } from '../appContext/AppContext';
 
 /**
  * Class responsible to create menus on app.
@@ -38,7 +38,7 @@ export class MenuBuilder {
       MenuBuilder.menuOptions.push(MenuBuilder.buildDevelopMenu());
     }
 
-    // MenuBuilder.menuOptions.push(MenuBuilder.buildLanguageMenu());
+    MenuBuilder.menuOptions.push(MenuBuilder.buildLanguageMenu());
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(MenuBuilder.menuOptions));
   }
@@ -46,11 +46,11 @@ export class MenuBuilder {
   private static buildDevelopMenu(): MenuItemConstructorOptions {
     return {
       type: 'submenu',
-      label: 'Development',
+      label: i18n.t('menus.Development'),
       submenu: [
         {
           type: 'normal',
-          label: 'Toggle DevTools',
+          label: i18n.t('menus.DevTools'),
           accelerator: 'CommandOrControl+Shift+T',
           click: () => {
             MainWindowController.mainWindow.webContents.toggleDevTools();
@@ -59,27 +59,27 @@ export class MenuBuilder {
       ]
     };
   }
-/*
+
   private static buildLanguageMenu(): MenuItemConstructorOptions {
 
     const submenu: MenuItemConstructorOptions[] =
-        InitializationController.options.languages.map((language: Language) => {
+      appContext.options.languages.map((language: Language) => {
       return {
         label: language.name,
         type: 'radio',
-        checked: language.locale === InitializationController.options.selectedLng,
+        checked: language.locale === appContext.options.selectedLng,
         click: () => {
           i18n.changeLanguage(language.locale);
-          InitializationController.options.selectedLng = language.locale;
+          appContext.options.selectedLng = language.locale;
         }
       };
     });
 
     return {
       type: 'submenu',
-      label: i18n.t('Language'),
+      label: i18n.t('menus.Language'),
       submenu: submenu
     };
   }
-  */
+
 }

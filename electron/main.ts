@@ -17,7 +17,7 @@
 * along with "server-arch".  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { app } from 'electron';
+import { app, dialog } from 'electron';
 // import i18n from 'i18next';
 
 import { MainWindowController, envDetector, ErrorWrapper, i18n, InitOptions } from '@alandrade21/electron-arch';
@@ -70,8 +70,11 @@ app.on('ready', () => {
   } catch (e) {
     if (e instanceof ErrorWrapper) {
       (<ErrorWrapper>e).consoleLog();
+      dialog.showErrorBox('Initialization Error', (<ErrorWrapper>e).message);
     } else {
       console.log(e);
+      dialog.showErrorBox('Initialization Error', 'An unexpected error ocurred. ' +
+                            'To see the error details, run this application on terminal.');
     }
 
     app.quit();
