@@ -18,7 +18,6 @@
 */
 
 import { app, dialog } from 'electron';
-// import i18n from 'i18next';
 
 import { MainWindowController, envDetector, ErrorWrapper, i18n, InitOptions } from '@alandrade21/electron-arch';
 import { InitializationController } from './initialization/InitializationController';

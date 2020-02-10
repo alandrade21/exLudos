@@ -19,10 +19,11 @@
 
 import { app } from 'electron';
 
-import { AppConfigurator, DatabaseFileManager, envDetector } from '@alandrade21/electron-arch';
+import { AppConfigurator, DatabaseFileManager, envDetector, InitOptions } from '@alandrade21/electron-arch';
 import { ConfigOptions } from './ConfigOptions';
 import { DATABASE_FILE_NAME, SKEL_FILE_NAME } from './../constants';
 import { appContext } from 'appContext/AppContext';
+import { Language } from './Language';
 
 /**
  * Class responsible to check and initialize all things that the app will need.
@@ -50,7 +51,7 @@ export class InitializationController extends AppConfigurator<ConfigOptions> {
 
     const languages: string[] = [];
 
-    this.appOptions.languages.forEach((language: Language) => {
+    this._appOptions.languages.forEach((language: Language) => {
       languages.push(language.locale);
     });
 

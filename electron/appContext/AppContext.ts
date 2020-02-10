@@ -20,6 +20,12 @@
 import { ConfigOptions } from '../initialization/ConfigOptions';
 import { AppContextError } from './AppContextError';
 
+/**
+ * This singleton represent the app context, and stores app wide data and utilities.
+ *
+ * The goal is store here all data and objects that must be accessible anywhere in the app main
+ * process.
+ */
 class AppContext {
   private _options: ConfigOptions | null;
 
