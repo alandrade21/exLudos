@@ -18,10 +18,12 @@
  */
 
 import { app } from 'electron';
-import { AppConfigurator, DatabaseFileManager } from '@alandrade21/electron-arch';
 
+import { AppConfigurator, DatabaseFileManager, envDetector, InitOptions } from '@alandrade21/electron-arch';
 import { ConfigOptions } from './ConfigOptions';
 import { DATABASE_FILE_NAME, SKEL_FILE_NAME } from './../constants';
+import { appContext } from 'appContext/AppContext';
+import { Language } from './Language';
 
 /**
  * Class responsible to check and initialize all things that the app will need.
@@ -33,30 +35,48 @@ export class InitializationController extends AppConfigurator<ConfigOptions> {
   // Override
   public doConfig(): void {
     super.doConfig();
+    appContext.options = this._appOptions;
+    this.initializeI18nSupport();
     this.initializeDatabase();
   }
 
   // Override
   protected createConfigFile(): void {
     this._appOptions = new ConfigOptions();
-    try {
-      this.cfm.writeFile(this.appOptions);
-    } catch (error) {
-      this.errorDialog(error);
-      throw error;
-    }
+    this._cfm.writeFile(this._appOptions);
+  }
+
+  private initializeI18nSupport() {
+
+
+    const languages: string[] = [];
+
+    this._appOptions.languages.forEach((language: Language) => {
+      languages.push(language.locale);
+    });
+
+    const options: InitOptions = {
+      backend: {
+        // path where resources get loaded from
+        loadPath: './locales/{{lng}}/{{ns}}.json',
+
+        // path to post missing resources
+        addPath: './locales/{{lng}}/{{ns}}.missing.json',
+
+        // jsonIndent to use when storing json files
+        jsonIndent: 2,
+      },
+      saveMissing: true,
+      fallbackLng: this.appOptions.fallbackLng,
+      whitelist: languages
+    };
+
   }
 
   private initializeDatabase(): void {
     if (!this._dfm.fileExist()) {
       const skelPath = `${app.getAppPath()}/database/`;
-      try {
-        this._dfm.copySkellDatabase(SKEL_FILE_NAME, skelPath);
-      } catch (error) {
-        this.errorDialog(error);
-        throw error;
-      }
+      this._dfm.copySkellDatabase(SKEL_FILE_NAME, skelPath);
     }
   }
-
 }

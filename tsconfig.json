@@ -38,6 +38,7 @@
       "node_modules/@types"
     ],
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
 
     /* Experimental Options */
     "emitDecoratorMetadata": true,

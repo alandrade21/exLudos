@@ -1,10 +1,10 @@
-// this file compiles the Angular part 
+// this file compiles the Angular part
 {
   "compileOnSave": false,
   "compilerOptions": {
      /* Basic Options */
     "incremental": true,
-    "tsBuildInfoFile": "./",
+    //"tsBuildInfoFile": "./",
     "target": "es5",
     "module": "commonjs",
     "lib": [
@@ -40,6 +40,7 @@
       "node_modules/@types"
     ],
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     
     /* Experimental Options */
     "emitDecoratorMetadata": true,

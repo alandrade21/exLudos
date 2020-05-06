@@ -17,24 +17,28 @@
  * along with "server-arch".  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { ConfigData } from '@alandrade21/electron-arch';
-import { Language } from './Language';
+import { Entity, UpdateDateColumn, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
 /**
- * Abstraction of the configuration file. This class contains all options that can be configured for
- * the app.
+ * Registers the hardware/O.S. platform where the game runs.
+ * ex: PS4, Windows, Linux, DS, etc.
  */
-export class ConfigOptions implements ConfigData {
+@Entity('tb_platform')
+export class Platform {
 
-  // Last language selected.
-  selectedLng = 'en';
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  // Supported languages
-  languages: Language[] = [
-    {'locale': 'en', 'name': 'English'},
-    {'locale': 'pt-BR', 'name': 'Português do Brasil'}
-  ];
+  @Column()
+  name: string;
 
-  // Custom data directory.
-  dataDir?: string;
+  @Column({name: 'icon_path'})
+  iconPath: string;
+
+  @CreateDateColumn({name: 'creation_date'})
+  creationDate: Date;
+
+  @UpdateDateColumn({name: 'last_alteration_date'})
+  lastAlterationDate: Date;
+
 }
