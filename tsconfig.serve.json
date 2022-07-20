@@ -1,12 +1,11 @@
-// this file compiles the Angular part
+// this file compiles the electron part
 {
-  "compileOnSave": false,
   "compilerOptions": {
-     /* Basic Options */
+    /* Basic Options */
     "incremental": true,
     //"tsBuildInfoFile": "./",
     "target": "es5",
-    "module": "commonjs",
+    //"module": "commonjs",
     "lib": [
       "es2018",
       "es2017",
@@ -16,16 +15,16 @@
     ],
     "declaration": false,
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./dist/app-out-tsc",
     "importHelpers": true,
-    //"noEmitOnError": true,
+    "noEmitOnError": true,
 
     /* Strict Type-Checking Options */
     "strict": true,
-    "noImplicitAny": true,
-    //"strictNullChecks": true,
-    "noImplicitThis": true,
     "alwaysStrict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
 
     /* Additional Checks */
     "noUnusedLocals": true,
@@ -35,9 +34,12 @@
 
     /* Module Resolution Options */
     "moduleResolution": "node",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "typeRoots": [
       "node_modules/@types"
+    ],
+    "types": [
+      "node"
     ],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -45,6 +47,12 @@
     /* Experimental Options */
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
-  }
+  },
+  "files": [
+    "./app/main.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }
-

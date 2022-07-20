@@ -1,12 +1,12 @@
-// this file compiles the Angular part 
+// this file compiles the Angular part
 {
   "compileOnSave": false,
   "compilerOptions": {
     /* Basic Options */
-    "module": "es2020",
     "incremental": true,
+    //"tsBuildInfoFile": "./",
     "target": "es5",
-    "moduleResolution": "node",
+    "module": "commonjs",
     "lib": [
       "es2018",
       "es2017",
@@ -16,25 +16,26 @@
     ],
     "declaration": false,
     "sourceMap": true,
-    "outDir": "./dist/out-tsc",
+    "outDir": "./dist",
     "importHelpers": true,
-    "noEmitOnError": true,
+    //"noEmitOnError": true,
 
     /* Strict Type-Checking Options */
     "strict": true,
-    "alwaysStrict": true,
-    "strictNullChecks": true,
     "noImplicitAny": true,
+    //"strictNullChecks": true,
     "noImplicitThis": true,
-    
+    "alwaysStrict": true,
+
     /* Additional Checks */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "allowJs": true,
 
     /* Module Resolution Options */
+    "moduleResolution": "node",
+    "baseUrl": "./",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -43,27 +44,7 @@
     
     /* Experimental Options */
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true 
-  },
-  "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
-  ],
-  "include": [
-    "src/**/*.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
-  "angularCompilerOptions": {
-    "strictTemplates": true,
-    "fullTemplateTypeCheck": true,
-    "annotateForClosureCompiler": true,
-    "strictInjectionParameters": true,
-    "skipTemplateCodegen": false,
-    "preserveWhitespaces": true,
-    "skipMetadataEmit": false,
-    "disableTypeScriptVersionCheck": true
+    "experimentalDecorators": true
   }
 }
 
